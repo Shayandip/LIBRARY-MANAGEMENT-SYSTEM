@@ -11,7 +11,7 @@ async function createUser(req, res, next) {
       phone,
       address,
     });
-    return res.status(200).json({
+    return res.status(201).json({
       isSuccess: true,
       statusCode: 201,
       message: "Registration Successful",
@@ -58,6 +58,41 @@ async function librarianList(req, res, next) {
       message: "Librarians fetched successfully",
       data: result.rows,
       total: result.total,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function librarianListByUser(req, res, next) {
+  try {
+    const { limit, offset, keyword } = req.query;
+    const result = await accountService.librarianListByUser({
+      offset: Number(offset) || 0,
+      limit: Number(limit) || 10,
+      keyword: keyword || "",
+    });
+    return res.status(200).json({
+      isSuccess: true,
+      statusCode: 200,
+      message: "Librarians fetched successfully",
+      data: result.rows,
+      total: result.total,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getProfile(req, res, next) {
+   try {
+    const id = req.user.id;
+    const result = await accountService.getProfile(id);
+    return res.status(200).json({
+      isSuccess: true,
+      statusCode: 200,
+      message: "Profile fetched successfully",
+      data: result,
     });
   } catch (error) {
     next(error);
@@ -142,4 +177,4 @@ async function deleteAccount(req, res, next) {
   }
 }
 
-module.exports = { createUser, userList, librarianList, profileUpdate, giveApproval, deleteAccount };
+module.exports = { createUser, userList, librarianList,librarianListByUser, getProfile, profileUpdate, giveApproval, deleteAccount };

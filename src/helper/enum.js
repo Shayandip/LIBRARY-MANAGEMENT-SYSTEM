@@ -10,4 +10,9 @@ const Status = {
   DEACTIVE: "DEACTIVE",
 };
 
-module.exports = { UserRole, Status };
+const BookBorrowStatus = {
+  BORROWED: "BORROWED",
+  RETURNED: "RETURNED",
+};
+
+module.exports = { UserRole, Status, BookBorrowStatus };

@@ -53,6 +53,38 @@ async function librarianList(data) {
   return { rows, total };
 }
 
+async function librarianListByUser(data) {
+  const { keyword = "", limit = 10, offset = 0 } = data;
+  const where = {
+    role: allEnums.UserRole.LIBRARIAN,
+    status: allEnums.Status.ACTIVE,
+  };
+  if (keyword.trim()) {
+    where[Op.or] = [
+      { name: { [Op.like]: `%${keyword}%` } },
+      { email: { [Op.like]: `%${keyword}%` } },
+      { phone: { [Op.like]: `%${keyword}%` } },
+    ];
+  }
+
+  const { rows, count: total } = await Account.findAndCountAll({
+    where,
+    limit,
+    offset,
+    order: [["createdAt", "DESC"]],
+  });
+
+  return { rows, total };
+}
+
+async function getProfile(id) {
+  const findAcc = await Account.findOne({ where: { id } });
+  if (!findAcc) {
+    throw createError(400, "Account not found!");
+  }
+  return findAcc;
+}
+
 async function profileUpdate(id, data) {
   const findAcc = await Account.findOne({ where: { id } });
   if (!findAcc) {
@@ -91,4 +123,12 @@ async function deleteAccount(id) {
   return findAcc;
 }
 
-module.exports = { userList, librarianList, profileUpdate, giveApproval, deleteAccount };
+module.exports = {
+  userList,
+  librarianList,
+  librarianListByUser,
+  getProfile,
+  profileUpdate,
+  giveApproval,
+  deleteAccount,
+};

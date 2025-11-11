@@ -9,8 +9,10 @@ const errorHandler = require("./src/middlewares/errorHandler");
 const routes = require("./src/routes/routes");
 
 /**********Imported Models***********/
-require("./src/models/account.model");
-require("./src/models/book.model");
+// require("./src/models/account.model");
+// require("./src/models/book.model");
+// require("./src/models/borrowedBook.model");
+require("./src/models");
 /**********Imported Models***********/
 
 const swaggerOptions = {
@@ -25,28 +27,6 @@ const swaggerOptions = {
   apis: ["./src/routes/routes.js"],
 };
 const specs = swaggerJsdoc(swaggerOptions);
-
-// sequelize
-//   .sync({ alter: true })
-//   .then(() => {
-//     console.log("Database connected");
-//     const app = express();
-//     app.use(express.json());
-//     app.use(cors());
-//     app.use(express.urlencoded({ extended: true }));
-//     app.use(morgan("dev"));
-//     app.use("/api/v1/", routes);
-//     app.use(errorHandler);
-//     app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-//     // app.use('/api', swaggerUi.serve, swaggerUi.setup(specs));
-
-//     app.listen(process.env.SERVER_PORT, () => {
-//       console.log("Server running on " + process.env.SERVER_PORT);
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(error.message);
-//   });
 
 (async () => {
   try {

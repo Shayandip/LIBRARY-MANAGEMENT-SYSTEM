@@ -4,9 +4,9 @@ async function adminRegister(req, res, next) {
   try {
     const { email, password } = req.body;
     const admin = await authService.adminRegister({ email, password });
-    return res.status(200).json({
+    return res.status(201).json({
       isSuccess: true,
-      statusCode: 200,
+      statusCode: 201,
       message: "Registration Successful",
       data: admin,
     });
@@ -41,9 +41,9 @@ async function register(req, res, next) {
       phone,
       address,
     });
-    return res.status(200).json({
+    return res.status(201).json({
       isSuccess: true,
-      statusCode: 200,
+      statusCode: 201,
       message: "Registration Successful",
       data: account,
     });

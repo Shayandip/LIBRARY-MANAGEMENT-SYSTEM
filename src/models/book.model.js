@@ -17,6 +17,18 @@ exports.Book = sequelize.define(
       allowNull: true,
       type: Sequelize.STRING,
     },
+    author: {
+      allowNull: true,
+      type: Sequelize.STRING,
+    },
+    genre: {
+      allowNull: true,
+      type: Sequelize.STRING,
+    },
+    quantity: {
+      allowNull: true,
+      type: Sequelize.INTEGER,
+    },
   },
   {
     timestamps: true,
