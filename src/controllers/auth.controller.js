@@ -33,10 +33,9 @@ async function adminLogin(req, res, next) {
 
 async function register(req, res, next) {
   try {
-    const { email, password, role, name, phone, address } = req.body;
-    const librarian = await authService.register({
+    const { email, role, name, phone, address } = req.body;
+    const account = await authService.register({
       email,
-      password,
       role,
       name,
       phone,
@@ -46,7 +45,7 @@ async function register(req, res, next) {
       isSuccess: true,
       statusCode: 200,
       message: "Registration Successful",
-      data: librarian,
+      data: account,
     });
   } catch (error) {
     next(error);

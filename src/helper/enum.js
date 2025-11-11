@@ -4,10 +4,10 @@ const UserRole = {
   USER: "USER",
 };
 
-const Gender = {
-  MALE: "MALE",
-  FEMALE: "FEMALE",
-  OTHERS: "OTHERS",
+const Status = {
+  PENDING: "PENDING",
+  ACTIVE: "ACTIVE",
+  DEACTIVE: "DEACTIVE",
 };
 
-module.exports = { UserRole, Gender };
+module.exports = { UserRole, Status };

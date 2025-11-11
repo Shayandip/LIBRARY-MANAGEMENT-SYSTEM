@@ -13,7 +13,6 @@ const login = Joi.object({
 
 const register = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().min(4).required(),
   role: Joi.string()
     .valid(...Object.values(allEnums.UserRole))
     .required(),

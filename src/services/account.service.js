@@ -3,33 +3,92 @@ const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
 const allEnums = require("../helper/enum");
 const { Account } = require("../models/account.model");
-const { UserDetail } = require("../models/userDetail.model");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 async function userList(data) {
-  const whereCondition = {};
-  if (data.keyword) {
-    whereCondition[Op.or] = [
-      { email: { [Op.like]: `%${data.keyword}%` } },
-      { phone: { [Op.like]: `%${data.keyword}%` } },
-      { "$userDetail.name$": { [Op.like]: `%${data.keyword}%` } },
+  const { keyword = "", limit = 10, offset = 0, status } = data;
+  const where = { role: allEnums.UserRole.USER };
+  if (status) {
+    where.status = status;
+  }
+  if (keyword.trim()) {
+    where[Op.or] = [
+      { name: { [Op.like]: `%${keyword}%` } },
+      { email: { [Op.like]: `%${keyword}%` } },
+      { phone: { [Op.like]: `%${keyword}%` } },
     ];
   }
 
   const { rows, count: total } = await Account.findAndCountAll({
-    where: whereCondition,
-    include: [
-      {
-        model: UserDetail,
-        required: true, // like INNER JOIN, use false for LEFT JOIN
-      },
-    ],
-    limit: data.limit,
-    offset: data.offset,
+    where,
+    limit,
+    offset,
     order: [["createdAt", "DESC"]],
   });
 
   return { rows, total };
 }
 
-module.exports = { userList };
+async function librarianList(data) {
+  const { keyword = "", limit = 10, offset = 0, status } = data;
+  const where = { role: allEnums.UserRole.LIBRARIAN };
+  if (status) {
+    where.status = status;
+  }
+  if (keyword.trim()) {
+    where[Op.or] = [
+      { name: { [Op.like]: `%${keyword}%` } },
+      { email: { [Op.like]: `%${keyword}%` } },
+      { phone: { [Op.like]: `%${keyword}%` } },
+    ];
+  }
+
+  const { rows, count: total } = await Account.findAndCountAll({
+    where,
+    limit,
+    offset,
+    order: [["createdAt", "DESC"]],
+  });
+
+  return { rows, total };
+}
+
+async function profileUpdate(id, data) {
+  const findAcc = await Account.findOne({ where: { id } });
+  if (!findAcc) {
+    throw createError(400, "Account not found!");
+  }
+
+  const updatedFields = {};
+  if (data.name) updatedFields.name = data.name;
+  if (data.phone) updatedFields.phone = data.phone;
+  if (data.address) updatedFields.address = data.address;
+
+  if (Object.keys(updatedFields).length === 0) {
+    throw createError(400, "No valid fields provided for update!");
+  }
+  await findAcc.update(updatedFields);
+
+  return findAcc;
+}
+
+async function giveApproval(id) {
+  const findAcc = await Account.findOne({ where: { id } });
+  if (!findAcc) {
+    throw createError(400, "Account not found!");
+  }
+  const updatedFields = { status: allEnums.Status.ACTIVE };
+  await findAcc.update(updatedFields);
+  return findAcc;
+}
+
+async function deleteAccount(id) {
+  const findAcc = await Account.findOne({ where: { id } });
+  if (!findAcc) {
+    throw createError(400, "Account not found!");
+  }
+  await findAcc.destroy();
+  return findAcc;
+}
+
+module.exports = { userList, librarianList, profileUpdate, giveApproval, deleteAccount };
