@@ -13,7 +13,6 @@ It is designed with scalable architecture, input validation (Joi), Sequelize ORM
 * JWT (jsonwebtoken) – For secure authentication and authorization
 * Joi – Schema-based request validation
 * Nodemailer – Email service integration
-* Multer – File uploading
 * dotenv – Environment configuration
 * bcryptjs – Password hashing for secure storage
 
