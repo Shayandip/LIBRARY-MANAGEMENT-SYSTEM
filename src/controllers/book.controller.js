@@ -29,6 +29,15 @@ async function bookList(req, res, next) {
       offset: Number(offset) || 0,
       keyword: keyword || "",
     });
+    if (result.rows.length == 0) {
+    return res.status(400).json({
+      isSuccess: true,
+      statusCode: 400,
+      message: "No Record Found",
+      data: result.rows,
+      total: result.total,
+    });  
+    }
     return res.status(200).json({
       isSuccess: true,
       statusCode: 200,

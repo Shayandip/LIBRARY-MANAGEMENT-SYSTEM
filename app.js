@@ -8,12 +8,9 @@ const { sequelize } = require("./src/config/database");
 const errorHandler = require("./src/middlewares/errorHandler");
 const routes = require("./src/routes/routes");
 
-/**********Imported Models***********/
-// require("./src/models/account.model");
-// require("./src/models/book.model");
-// require("./src/models/borrowedBook.model");
+/**********Import Models***********/
 require("./src/models");
-/**********Imported Models***********/
+/**********Import Models***********/
 
 const swaggerOptions = {
   definition: {

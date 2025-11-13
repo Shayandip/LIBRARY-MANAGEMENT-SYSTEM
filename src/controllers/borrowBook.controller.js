@@ -55,6 +55,15 @@ async function findRecordByLibrarian(req, res, next) {
       limit: Number(limit) || 10,
       status: status,
     });
+    if (result.rows.length == 0) {
+    return res.status(400).json({
+      isSuccess: true,
+      statusCode: 400,
+      message: "No Record Found",
+      data: result.rows,
+      total: result.total,
+    });  
+    }
     return res.status(200).json({
       isSuccess: true,
       statusCode: 200,
@@ -76,6 +85,15 @@ async function findRecordByUser(req, res, next) {
       limit: Number(limit) || 10,
       status: status,
     });
+    if (result.rows.length == 0) {
+    return res.status(400).json({
+      isSuccess: true,
+      statusCode: 400,
+      message: "No Record Found",
+      data: result.rows,
+      total: result.total,
+    });  
+    }
     return res.status(200).json({
       isSuccess: true,
       statusCode: 200,
