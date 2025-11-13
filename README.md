@@ -13,7 +13,6 @@ It is designed with scalable architecture, input validation (Joi), Sequelize ORM
 * JWT (jsonwebtoken) – For secure authentication and authorization
 * Joi – Schema-based request validation
 * Nodemailer – Email service integration
-* Swagger – API documentation
 * Multer – File uploading
 * dotenv – Environment configuration
 * bcryptjs – Password hashing for secure storage
@@ -107,7 +106,6 @@ Once started, the server runs at:
 * ✉️ Email Integration via Nodemailer
 * 🗃️ Sequelize ORM for MySQL / SQLite
 * 🧠 Modular Controller & Route Structure
-* 📊 Swagger-based API Documentation
 
 ## 🧑‍💻 Scripts
 | Command       | Description                                           |
