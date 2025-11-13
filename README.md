@@ -3,6 +3,9 @@
 A Node.js + Express.js based backend API for managing a digital library system, featuring secure authentication, role-based access control, book management, user and librarian management, and borrowing/return tracking functionalities.
 It is designed with scalable architecture, input validation (Joi), Sequelize ORM, and JWT-based authentication.
 
+### Quick Note:
+- User/Librarian will get their login password in the registered email after they register. Please make sure to add your SMTP credentials in .env file.   
+
 ## 🚀 Tech Stack
 * Node.js – JavaScript runtime for backend development
 * Express.js – Web framework for building RESTful APIs
